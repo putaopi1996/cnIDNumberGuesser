@@ -1,22 +1,58 @@
-function validateAndGuessID() {
-    const idInput = document.getElementById('idInput').value;
-    const resultElement = document.getElementById('result');
+function processIDs() {
+    const fileInput = document.getElementById('fileInput');
+    const idTextarea = document.getElementById('idTextarea');
+    const resultList = document.getElementById('resultList');
 
-    if (!isIDFormatValid(idInput)) {
-        resultElement.textContent = '身份证号码格式不正确。';
-        return;
-    }
+    // 清空之前的结果
+    resultList.innerHTML = '';
 
-    if (isIDValid(idInput)) {
-        resultElement.textContent = '有效的身份证号码。';
+    // 读取文件内容
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function(event) {
+            const fileContent = event.target.result;
+            idTextarea.value = fileContent; // 将文件内容显示在 textarea 中
+            const idArray = fileContent.trim().split('\n'); // 按行分割成数组
+            validateAndGuessIDs(idArray);
+        };
+
+        reader.onerror = function(event) {
+            alert('读取文件出错');
+        };
+
+        reader.readAsText(file);
+
     } else {
-        const guessedIDs = guessID(idInput);
-        if (guessedIDs.length > 0) {
-            resultElement.textContent = '可能的有效身份证号码: ' + guessedIDs.join(', ');
-        } else {
-            resultElement.textContent = '未找到有效的身份证号码。';
-        }
+        // 从文本区域读取
+        const idArray = idTextarea.value.trim().split('\n');
+        validateAndGuessIDs(idArray);
     }
+}
+
+function validateAndGuessIDs(idArray) {
+    const resultList = document.getElementById('resultList');
+
+    idArray.forEach(id => {
+        id = id.trim(); // 去除首尾空格
+        if (id) { // 确保不是空行
+            const listItem = document.createElement('li');
+            if (!isIDFormatValid(id)) {
+                listItem.textContent = `身份证号码 ${id} 格式不正确。`;
+            } else if (isIDValid(id)) {
+                listItem.textContent = `身份证号码 ${id} 有效。`;
+            } else {
+                const guessedIDs = guessID(id);
+                if (guessedIDs.length > 0) {
+                    listItem.textContent = `身份证号码 ${id} 的可能有效号码: ${guessedIDs.join(', ')}`;
+                } else {
+                    listItem.textContent = `身份证号码 ${id} 未找到有效的身份证号码。`;
+                }
+            }
+            resultList.appendChild(listItem);
+        }
+    });
 }
 
 // 检查身份证号码格式（18位，最后一位可能是X，可以包含星号）
@@ -69,9 +105,15 @@ function guessID(id) {
 
 // 下载结果功能
 function downloadResults() {
-    const resultElement = document.getElementById('result');
-    const text = resultElement.textContent;
-    const blob = new Blob([text], { type: 'text/plain' });
+    const resultList = document.getElementById('resultList');
+    let text = '';
+    for (let i = 0; i < resultList.children.length; i++) {
+        text += resultList.children[i].textContent + '\n';
+    }
+
+    const blob = new Blob([text], {
+        type: 'text/plain'
+    });
     const url = URL.createObjectURL(blob);
 
     const a = document.createElement('a');
