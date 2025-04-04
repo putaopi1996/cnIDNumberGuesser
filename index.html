@@ -10,10 +10,18 @@
 <body>
     <div class="container">
         <h1>GuessID</h1>
-        <input type="text" id="idInput" placeholder="请输入身份ID">
-        <button onclick="validateAndGuessID()">GuessID</button>
+
+        <!-- 文件上传区域 -->
+        <input type="file" id="fileInput" accept=".txt">
+
+        <!-- 文本输入区域，用于显示/编辑文件内容 -->
+        <textarea id="idTextarea" placeholder="请上传包含身份证号码的文本文件，或者手动输入，每行一个号码"></textarea>
+        <button onclick="processIDs()">批量GuessID</button>
         <button onclick="downloadResults()">Download</button>
-        <p id="result">
+
+        <!-- 结果显示区域 -->
+        <ul id="resultList"></ul>
+
         <h2 id="简介">简介</h2>
         <p>这是一个用于推测并补全中国大陆身份证号码的项目，在您不记得身份证号的某一部分或者证件号码某一部分缺失时，可以用该工具补全身份证号码。
             <br>
@@ -25,7 +33,6 @@
         <p>点击“GuessID”运行。得出结果后，结果会显示在下方。你也可以点击“Download”将结果保存在 &#39;guessedIDs.txt&#39; 并下载到本地。</p>
         <p>项目源码：
             <a href="https://github.com/Gloridust/cnIDNumberGuesser">https://github.com/Gloridust/cnIDNumberGuesser</a>
-        </p>
         </p>
     </div>
     <script src="script.js"></script>
