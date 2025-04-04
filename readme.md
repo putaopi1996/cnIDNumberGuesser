@@ -1,3 +1,4 @@
+
 # cnIDNumberGuesser
 
 ![GitHub release](https://img.shields.io/github/v/release/Gloridust/cnIDNumberGuesser?style=flat-square)
@@ -10,22 +11,78 @@
 ![GitHub issues](https://img.shields.io/github/issues/Gloridust/cnIDNumberGuesser?style=flat-square)
 ![GitHub issues closed](https://img.shields.io/github/issues-closed/Gloridust/cnIDNumberGuesser?style=flat-square)  
 
-此文档的语言为简体中文，仅针对中文用户。For English? [Please click here](readme_en.md).
+This document is in English.For Simplified Chinese? [Please click here](readme.md).
 
-## 简介
+## Introduction
 
-这是一个用于推测并补全中国大陆身份证号码的项目，在您不记得身份证号的某一部分或者证件号码某一部分缺失时，可以用该工具补全身份证号码。该工具提供 Python 和 Web 两个版本，你可以选择在本地用 Python 运行，或者部署在服务器上通过前端 JS 代码实现。注意：该项目仅用于学术研究目的。**请遵守当地法律，不要用于非法用途。若不甚误入歧途，一切后果与作者无关**
+This project is designed to guess and complete Chinese mainland ID numbers. It is useful when you don't remember part of your ID number or if a part of the document number is missing. The tool is available in both Python and Web versions. You can choose to run it locally with Python or deploy it on a server and implement it through front-end JS code. Note: This project is intended only for academic research purposes. **Please comply with local laws and do not use it for illegal purposes. The author is not responsible for any misuse or consequences thereof.**
 
-**NOTE:**C/C++版本暂时不可用，如果你擅长C/C++，你可以提交PR来帮助我们共同完善它。
+**NOTE:** The C/C++ version is temporarily unavailable. If you are good at C/C++, you can submit a PR to help us improve it together.
 
-我们充分尊重用户的隐私。无论是 Python 还是 Web 版本，所有的数据均在用户端本地处理，不上传任何数据。
+## Deployment and Usage
 
-同样，我们希望使用者尊重他人隐私，不用于非法用途；**请遵守当地法律，不要用于非法用途。若不甚误入歧途，一切后果与作者无关。**
+### Python
 
-## 鸣谢
+1. Download [guessID.py](guessID.py) and [citycodes.txt](citycodes.txt) and place them in the same folder. You can also download the entire repository:
 
-本项目的 Python 版本和 [citycodes.txt](citycodes.txt) 文件参考了[https://github.com/wlkjyh/completion_idcard](https://github.com/wlkjyh/completion_idcard)的内容。十分感谢作者的开源！
+```bash
+git clone https://github.com/Gloridust/cnIDNumberGuesser
+cd cnIDNumberGuesser
+```
 
-## 开源协议
+2. Install dependencies
+
+```python
+pip install psutil
+```
+
+Ensure you are using the pip version compatible with your Python. If working in multiple Python environments, you might need to use `pip3` or a specific command like `python -m pip install`.
+
+3. Run the program:
+
+```python
+python3 guessID.py
+```
+
+4. Usage: Input an 18-digit ID number, replacing missing parts with asterisks "*".
+
+![Python run example](./readme_src/run_py.png)
+
+5. After the program ends, check the results in [resultID.txt](resultID.txt). Please delete the original [resultID.txt](resultID.txt) file before using it again.
+
+![Python result example](./readme_src/result_py.png)
+
+### Web
+
+0. For web deployment, you can [Fork this project](https://github.com/Gloridust/cnIDNumberGuesser/fork), then select a branch and bind a domain on Github Page for immediate use.
+
+![Web page example](./readme_src/page.png)
+
+1. To deploy on your own server, download [index.html](index.html), [script.js](script.js), [style.css](style.css), and [citycodes.txt](citycodes.txt) and place them in the same folder. You can also download the entire repository:
+
+```bash
+git clone https://github.com/Gloridust/cnIDNumberGuesser
+cd cnIDNumberGuesser
+```
+
+2. After deployment, visit [index.html](index.html) to start using. Similarly, input an 18-digit ID number, replacing missing parts with asterisks "*".
+
+![Web run example](./readme_src/run_web.png)
+
+3. Click “GuessID” to run. Once the result is obtained, it will be displayed below. You can also click “Download” to save the result in 'guessedIDs.txt' and download it to your device.
+
+![Web result example](./readme_src/result_web.png)
+
+## Privacy Statement
+
+We fully respect user privacy. Whether it's the Python or Web version, all data is processed locally on the user's end and no data is uploaded.
+
+Similarly, we hope users respect others' privacy and do not use this for illegal purposes; **please comply with local laws and do not use it for illegal purposes. The author is not responsible for any misuse or consequences thereof.**
+
+## Acknowledgements
+
+The Python version of this project and the [citycodes.txt](citycodes.txt) file were inspired by content from [https://github.com/wlkjyh/completion_idcard](https://github.com/wlkjyh/completion_idcard). Many thanks to the author for their open source contribution!
+
+## Open Source License
 
 MIT
